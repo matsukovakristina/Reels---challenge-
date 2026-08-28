@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 дней Reels — челлендж</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink: #E0197A;
+    --pink-dark: #B00E60;
+    --pink-soft: #FFEAF3;
+    --pink-line: #FBC7DF;
+    --black: #141014;
+    --ink: #2A2129;
+    --gray: #77697320;
+    --gray-text: #7C6E76;
+    --white: #FFFFFF;
+    --radius: 22px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Manrope', sans-serif;
+    background:var(--white);
+    color:var(--black);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Unbounded', sans-serif;
+    letter-spacing:-0.02em;
+  }
+  a{text-decoration:none; color:inherit;}
+  img{max-width:100%; display:block;}
+
+  /* ---------- Story progress bar (signature element) ---------- */
+  #storybar{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    display:flex; gap:5px;
+    padding:10px 14px;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--pink-line);
+  }
+  .segment{
+    flex:1;
+    height:4px;
+    border-radius:4px;
+    background:#F1DDE7;
+    overflow:hidden;
+    position:relative;
+  }
+  .segment i{
+    position:absolute; left:0; top:0; bottom:0;
+    width:0%;
+    background:linear-gradient(90deg, var(--pink), var(--pink-dark));
+    border-radius:4px;
+    transition:width .1s linear;
+  }
+  .segment .num{
+    position:absolute;
+    top:8px; left:0;
+    font-family:'Unbounded', sans-serif;
+    font-size:9px;
+    color:#C9A9BB;
+    font-weight:600;
+  }
+
+  section{padding:96px 24px; max-width:760px; margin:0 auto;}
+  .eyebrow{
+    display:inline-block;
+    font-family:'Unbounded', sans-serif;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--pink-dark);
+    background:var(--pink-soft);
+    padding:8px 16px;
+    border-radius:100px;
+    margin-bottom:22px;
+  }
+
+  /* ---------- HERO ---------- */
+  #hero{
+    padding-top:150px;
+    padding-bottom:60px;
+    text-align:center;
+    position:relative;
+  }
+  #hero::before{
+    content:"";
+    position:absolute;
+    top:-120px; left:50%;
+    transform:translateX(-50%);
+    width:640px; height:640px;
+    background:radial-gradient(circle, var(--pink-soft) 0%, rgba(255,255,255,0) 70%);
+    z-index:-1;
+  }
+  .hero-title{
+    font-size:clamp(34px, 6vw, 56px);
+    font-weight:800;
+    line-height:1.08;
+    color:var(--black);
+  }
+  .hero-title em{
+    font-style:normal;
+    background:linear-gradient(100deg, var(--pink) 10%, var(--pink-dark) 90%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    margin-top:22px;
+    font-size:18px;
+    line-height:1.6;
+    color:var(--gray-text);
+    max-width:520px;
+    margin-left:auto; margin-right:auto;
+  }
+  .hero-meta{
+    margin-top:36px;
+    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+  }
+  .pill{
+    font-size:14px; font-weight:700;
+    padding:10px 18px;
+    border-radius:100px;
+    border:1.5px solid var(--black);
+    font-family:'Unbounded', sans-serif;
+    font-size:12px;
+  }
+  .pill.dark{background:var(--black); color:var(--white); border-color:var(--black);}
+
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:38px;
+    background:linear-gradient(100deg, var(--pink), var(--pink-dark));
+    color:var(--white);
+    font-family:'Unbounded', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:20px 38px;
+    border-radius:100px;
+    box-shadow:0 14px 30px -10px rgba(224,25,122,.55);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .cta-btn:hover{transform:translateY(-2px); box-shadow:0 18px 34px -8px rgba(224,25,122,.6);}
+  .cta-btn .arrow{font-size:18px;}
+  .cta-note{
+    margin-top:14px; font-size:13px; color:var(--gray-text);
+  }
+
+  /* ---------- PAIN — chat bubbles ---------- */
+  #pain{padding-top:40px;}
+  .pain-intro{
+    font-size:20px; font-weight:600; line-height:1.5; margin-bottom:36px;
+  }
+  .bubbles{display:flex; flex-direction:column; gap:12px;}
+  .bubble{
+    align-self:flex-start;
+    background:var(--pink-soft);
+    border-radius:4px 20px 20px 20px;
+    padding:14px 20px;
+    font-size:15.5px;
+    color:var(--ink);
+    max-width:88%;
+    line-height:1.5;
+  }
+  .bubble.b2{align-self:flex-end; background:var(--black); color:var(--white); border-radius:20px 4px 20px 20px;}
+  .pain-close{
+    margin-top:32px;
+    font-size:20px; font-weight:700; font-family:'Unbounded', sans-serif;
+    line-height:1.4;
+  }
+  .pain-close .hl{color:var(--pink-dark);}
+
+  /* ---------- WHAT WE DO ---------- */
+  .section-title{
+    font-size:clamp(26px, 4vw, 36px);
+    font-weight:700;
+    line-height:1.15;
+    margin-bottom:16px;
+  }
+  .section-lead{
+    font-size:16.5px; color:var(--gray-text); line-height:1.6; margin-bottom:44px; max-width:540px;
+  }
+
+  .benefit-list{display:flex; flex-direction:column;}
+  .benefit{
+    display:grid; grid-template-columns:56px 1fr; gap:20px;
+    padding:26px 0;
+    border-top:1px solid #F1E4EC;
+    align-items:flex-start;
+  }
+  .benefit:last-child{border-bottom:1px solid #F1E4EC;}
+  .benefit-icon{
+    width:48px; height:48px; border-radius:14px;
+    background:var(--pink-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Unbounded', sans-serif;
+    font-weight:700; font-size:15px; color:var(--pink-dark);
+  }
+  .benefit h4{
+    font-family:'Manrope', sans-serif;
+    font-size:16.5px; font-weight:700; margin-bottom:6px;
+  }
+  .benefit p{font-size:14.5px; color:var(--gray-text); line-height:1.55;}
+
+  /* ---------- FORMAT FLOW ---------- */
+  #format{background:var(--black); color:var(--white); border-radius:32px; max-width:920px; margin:0 auto; padding:80px 32px;}
+  #format .eyebrow{background:rgba(255,255,255,.08); color:var(--pink-line);}
+  #format .section-title{color:var(--white);}
+  #format .section-lead{color:#C9B7C0;}
+  .flow{
+    display:flex; flex-wrap:wrap; gap:0; align-items:center; margin-top:20px;
+  }
+  .flow-step{
+    background:#221A20;
+    border:1px solid #3A2C34;
+    border-radius:16px;
+    padding:16px 20px;
+    font-size:14px;
+    font-weight:600;
+    flex:1 1 140px;
+    text-align:center;
+  }
+  .flow-arrow{
+    color:var(--pink);
+    font-size:18px;
+    flex:0 0 auto;
+    padding:0 10px;
+  }
+
+  /* ---------- PRICE ---------- */
+  #price{text-align:center;}
+  .price-card{
+    border:2px solid var(--black);
+    border-radius:28px;
+    padding:56px 32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .price-card::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(160deg, var(--pink-soft) 0%, rgba(255,255,255,0) 45%);
+    z-index:-1;
+  }
+  .price-big{
+    font-family:'Unbounded', sans-serif;
+    font-weight:800;
+    font-size:clamp(48px,8vw,72px);
+    line-height:1;
+  }
+  .price-big span{font-size:0.4em; vertical-align:top; font-weight:600;}
+  .price-per-day{margin-top:10px; font-size:14px; color:var(--gray-text); font-weight:600;}
+  .price-compare{
+    margin-top:28px; font-size:15px; color:var(--ink); line-height:1.6;
+  }
+  .price-compare b{color:var(--pink-dark);}
+
+  /* ---------- TESTIMONIALS ---------- */
+  #reviews{background:var(--pink-soft); border-radius:32px; max-width:1000px; margin:0 auto; padding:80px 32px;}
+  .reviews-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:20px; margin-top:20px;
+  }
+  .review-card{
+    background:var(--white);
+    border-radius:20px;
+    padding:28px 24px;
+    display:flex; flex-direction:column; gap:16px;
+    box-shadow:0 10px 30px -18px rgba(176,14,96,.35);
+  }
+  .review-quote{font-size:14.5px; line-height:1.6; color:var(--ink); flex:1;}
+  .review-quote::before{content:"\201C"; color:var(--pink); font-family:'Unbounded'; font-size:22px;}
+  .review-author{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Unbounded', sans-serif;
+    font-size:12px; font-weight:600; color:var(--pink-dark);
+  }
+  .avatar{
+    width:34px; height:34px; border-radius:50%;
+    background:linear-gradient(140deg, var(--pink), var(--pink-dark));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-family:'Unbounded'; font-size:13px; font-weight:700;
+  }
+
+  /* ---------- FINAL CTA ---------- */
+  #final{text-align:center; padding-bottom:140px;}
+  #final .hero-title{font-size:clamp(30px,5vw,44px);}
+
+  footer{
+    text-align:center; padding:36px 24px 60px; font-size:12.5px; color:#B8A6B0;
+  }
+
+  @media (max-width:560px){
+    section{padding:72px 20px;}
+    .benefit{grid-template-columns:44px 1fr; gap:14px;}
+    #format{border-radius:20px; padding:56px 22px;}
+    #reviews{border-radius:20px; padding:56px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="storybar"></div>
+
+<section id="hero">
+  <span class="eyebrow">Челлендж · 10 дней</span>
+  <h1 class="hero-title">10 дней — и у тебя <em>больше не будет</em><br>проблемы «что мне снять?»</h1>
+  <p class="hero-sub">Практический челлендж по Reels: задание каждый день, понятная инструкция и обратная связь от меня. Без бесполезной теории — только то, что реально снимается.</p>
+  <div class="hero-meta">
+    <span class="pill">Старт 31.08</span>
+  </div>
+  <a href="https://link.payform.ru/?paymentLinkId=deb642d1-8660-487d-ba5c-30bea5f3a42b" class="cta-btn">Забрать место в челлендже <span class="arrow">→</span></a>
+  <p class="cta-note">Мест ограничено — обратную связь даю лично</p>
+</section>
+
+<section id="pain">
+  <p class="pain-intro">Знакомо?</p>
+  <div class="bubbles">
+    <div class="bubble">Смотрю чужие Reels, сохраняю идеи в закладки… и закрываю приложение с мыслью «ладно, сниму потом»</div>
+    <div class="bubble b2">Вроде хочу вести блог, но не знаю, что снимать</div>
+    <div class="bubble">Идеи заканчиваются через пару дней. Все ролики кажутся одинаковыми</div>
+    <div class="bubble b2">Снимаю — а просмотров нет, и непонятно, почему</div>
+  </div>
+  <p class="pain-close">В итоге проходит неделя, две, месяц —<br>а блог стоит <span class="hl">на месте</span>.</p>
+</section>
+
+<section id="what">
+  <span class="eyebrow">Что внутри</span>
+  <h2 class="section-title">Мы не будем смотреть уроки.<br>Мы будем снимать.</h2>
+  <p class="section-lead">Каждый день — конкретное задание и понятная инструкция. Пришла → получила задание → сделала → получила обратную связь → пошла дальше.</p>
+
+  <div class="benefit-list">
+    <div class="benefit">
+      <div class="benefit-icon">10</div>
+      <div><h4>10 отснятых Reels</h4><p>Наконец начнёшь регулярно создавать контент, а не откладывать «на потом».</p></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">💡</div>
+      <div><h4>Идеи, когда «нечего сказать»</h4><p>Научишься находить темы для роликов самостоятельно — без ступора и ожидания вдохновения.</p></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🎞</div>
+      <div><h4>Разные форматы подачи</h4><p>Разберём разные способы снимать, чтобы перестать делать один и тот же ролик по кругу.</p></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🔄</div>
+      <div><h4>Адаптация трендов под себя</h4><p>Научишься брать понравившиеся Reels и тренды и превращать их в свой контент — не копируя чужое.</p></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🧠</div>
+      <div><h4>Тема → интересный ролик</h4><p>Поймёшь, как из обычной темы делать ролик, который хочется досмотреть.</p></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">💬</div>
+      <div><h4>Обратная связь от меня</h4><p>По каждому твоему заданию — не в пустоту, а с разбором.</p></div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon">🧵</div>
+      <div><h4>Отдельно — Threads</h4><p>Как использовать его не ради просмотров, а для привлечения аудитории в блог.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="format">
+  <span class="eyebrow">Формат</span>
+  <h2 class="section-title">Максимум практики.<br>Минимум теории.</h2>
+  <p class="section-lead">Никаких марафонов «купила — посмотрела первый день — забросила». Здесь ты действуешь каждый день.</p>
+  <div class="flow">
+    <div class="flow-step">Пришла</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Получила задание</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Сделала</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Обратная связь</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">Пошла дальше</div>
+  </div>
+</section>
+
+<section id="price">
+  <span class="eyebrow">Стоимость</span>
+  <h2 class="section-title">Посчитай сама</h2>
+  <div class="price-card">
+    <div class="price-big">490<span> ₽</span></div>
+    <div class="price-per-day">это 49 ₽ в день — примерно как чашка кофе</div>
+    <p class="price-compare">Но вместо кофе через 10 дней у тебя будет: <b>10 отснятых Reels</b> + контент-план на 2 недели + новый навык создания контента + привычка вести блог + обратная связь от маркетолога.<br><br>И один удачный Reels может принести тебе гораздо больше, чем стоимость участия.</p>
+  </div>
+</section>
+
+<section id="reviews">
+  <span class="eyebrow">Отзывы участниц</span>
+  <h2 class="section-title">Но лучше всего о челлендже расскажут те, кто уже проходил его</h2>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <p class="review-quote">Кристина, и челлендж и мастер-класс были наполнены важными и конкретными деталями, прояснениями и обозначениями конкретных действий для использования Reels. Очень благодарна за ваш творческий подход. Для меня много новизны — однозначно буду применять на практике.</p>
+      <div class="review-author"><div class="avatar">ТП</div>Татьяна Полякова</div>
+    </div>
+    <div class="review-card">
+      <p class="review-quote">Отдельная благодарность за структурную подачу информации — всё понятно, за замечательные гайды и промпты, а ещё за энергетику, обратную связь и дельные рекомендации. Поняла, как важна регулярность и пора отключать перфекционизм: лучше сделать не идеально, но сделать. Интенсив оправдал и превзошёл мои ожидания!</p>
+      <div class="review-author"><div class="avatar">ТП</div>Татьяна Полякова</div>
+    </div>
+    <div class="review-card">
+      <p class="review-quote">Безумно благодарю за этот челлендж! Просмотры до сих пор растут, количество просмотров страницы очень увеличилось, и в целом я чувствую классный импульс продолжать. Даже задания, которые сначала были мне непонятны, в итоге дали новый взгляд. Челлендж уже закончился, а я всё равно продолжаю снимать Reels.</p>
+      <div class="review-author"><div class="avatar">ВЯ</div>Виктория Яцкевич</div>
+    </div>
+  </div>
+</section>
+
+<section id="final">
+  <h2 class="hero-title">Хочешь в этот раз не просто<br>сохранить идеи, а <em>реально начать снимать</em>?</h2>
+  <div class="hero-meta">
+    <span class="pill">Старт 31.08</span>
+    <span class="pill dark">490 ₽ за всё</span>
+  </div>
+  <a href="https://link.payform.ru/?paymentLinkId=deb642d1-8660-487d-ba5c-30bea5f3a42b" class="cta-btn">Забрать место в челлендже <span class="arrow">→</span></a>
+  <p class="cta-note">Увидимся на челлендже</p>
+</section>
+
+<footer>10-дневный челлендж по Reels · Кристина Мацукова</footer>
+
+<script>
+  const N = 10;
+  const bar = document.getElementById('storybar');
+  for(let i=1;i<=N;i++){
+    const seg = document.createElement('div');
+    seg.className = 'segment';
+    seg.innerHTML = '<i></i><span class="num">'+i+'</span>';
+    bar.appendChild(seg);
+  }
+  const fills = Array.from(document.querySelectorAll('.segment i'));
+  function updateBar(){
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = Math.min(Math.max(scrollTop / docHeight, 0), 1) * N;
+    fills.forEach((f, idx) => {
+      const local = Math.min(Math.max(progress - idx, 0), 1) * 100;
+      f.style.width = local + '%';
+    });
+  }
+  window.addEventListener('scroll', updateBar);
+  updateBar();
+</script>
+
+</body>
+</html>
