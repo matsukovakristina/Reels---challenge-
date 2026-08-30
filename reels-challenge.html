@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Контент, который приводит клиентов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#13030c;
+    --ink-2:#1e0a15;
+    --ink-3:#2a0f1c;
+    --pink:#e0197a;
+    --pink-dark:#b00e60;
+    --pink-glow:#ff5fa8;
+    --amber:#f5b942;
+    --cream:#fdf1f5;
+    --cream-dim:#e9c9d6;
+    --line:rgba(253,241,245,0.12);
+    --max:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;background-color:#13030c;}
+  html,body{min-height:100%;}
+  body{
+    background-color:var(--ink);
+    color:var(--cream);
+    font-family:'Manrope',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  section{background-color:var(--ink);}
+  h1,h2,h3,.display{
+    font-family:'Unbounded',sans-serif;
+    font-weight:700;
+    line-height:1.15;
+    letter-spacing:-0.01em;
+  }
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ::selection{background:var(--pink);color:#fff;}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Unbounded',sans-serif;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--pink-glow);
+  }
+  .eyebrow::before{
+    content:"";
+    width:16px;height:1px;
+    background:var(--pink-glow);
+    display:inline-block;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:18px 30px;
+    border-radius:100px;
+    background:linear-gradient(135deg,var(--pink) 0%,var(--pink-dark) 100%);
+    color:#fff;
+    box-shadow:0 14px 34px -12px rgba(224,25,122,0.65);
+    transition:transform .25s ease, box-shadow .25s ease;
+    border:none;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px -10px rgba(224,25,122,0.8);}
+  .btn:focus-visible{outline:2px solid var(--amber);outline-offset:4px;}
+  .btn svg{width:16px;height:16px;flex:none;}
+
+  .scroll-cue{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;
+    color:var(--cream-dim);letter-spacing:0.04em;
+  }
+  .scroll-cue .arrow{
+    width:26px;height:26px;border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+
+  section{position:relative;padding:88px 0;}
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(26px,4vw,40px);margin-top:14px;}
+  .section-head p{margin-top:16px;color:var(--cream-dim);font-size:16.5px;max-width:540px;}
+
+  header{
+    position:sticky;top:0;z-index:40;
+    background:rgba(19,3,12,0.72);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:16px;padding-bottom:16px;
+  }
+  .brand{font-family:'Unbounded',sans-serif;font-weight:700;font-size:14.5px;letter-spacing:0.02em;}
+  .brand span{color:var(--pink-glow);}
+
+  .hero{padding-top:72px;padding-bottom:56px;overflow:hidden;}
+  .hero .glow{
+    position:absolute;
+    width:900px;height:900px;
+    top:-440px;left:50%;
+    transform:translateX(-50%);
+    background:radial-gradient(circle,rgba(224,25,122,0.32) 0%,rgba(224,25,122,0) 68%);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:760px;position:relative;}
+  .hero h1{
+    font-size:clamp(30px,5vw,50px);
+    margin-top:20px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg,var(--pink-glow),var(--amber));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p.lead{
+    margin-top:22px;
+    font-size:17.5px;
+    color:var(--cream-dim);
+    max-width:560px;
+  }
+  .hero-foot{margin-top:38px;}
+
+  .pain-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  .pain-card{
+    background:var(--ink-2);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:26px 24px;
+  }
+  .pain-card .quote{
+    font-family:'Unbounded',sans-serif;
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--cream);
+    line-height:1.4;
+  }
+  .pain-card p{margin-top:10px;font-size:14.5px;color:var(--cream-dim);}
+  .pain-card .mark{color:var(--pink-glow);font-size:22px;font-family:'Unbounded',sans-serif;}
+
+  .journey-track{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:0;
+    position:relative;
+    margin-top:36px;
+  }
+  .journey-track::before{
+    content:"";
+    position:absolute;
+    top:19px;left:6%;right:6%;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--line) 10%,var(--line) 90%,transparent);
+  }
+  .j-step{position:relative;text-align:center;padding:0 6px;}
+  .j-dot{
+    width:38px;height:38px;
+    border-radius:50%;
+    margin:0 auto 16px;
+    background:var(--ink);
+    border:1px solid var(--pink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Unbounded',sans-serif;
+    font-size:13px;font-weight:700;
+    color:var(--pink-glow);
+    position:relative;z-index:1;
+  }
+  .j-step:nth-child(5) .j-dot{background:linear-gradient(135deg,var(--pink),var(--pink-dark));border-color:transparent;color:#fff;}
+  .j-step h3{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.02em;}
+  .j-step p{font-size:12.5px;color:var(--cream-dim);margin-top:6px;}
+
+  .format-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+  }
+  .format-item{
+    background:var(--ink-2);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:28px 26px;
+    transition:border-color .25s ease;
+  }
+  .format-item:hover{border-color:var(--pink);}
+  .format-item .num{
+    font-family:'Unbounded',sans-serif;
+    font-size:12.5px;
+    color:var(--pink-glow);
+    letter-spacing:0.1em;
+  }
+  .format-item h3{margin-top:10px;font-size:18px;}
+  .format-item p{margin-top:10px;font-size:14.5px;color:var(--cream-dim);}
+  .format-item .ex{
+    margin-top:14px;
+    padding:12px 16px;
+    border-left:2px solid var(--pink);
+    background:rgba(224,25,122,0.08);
+    border-radius:0 12px 12px 0;
+    font-size:13.5px;
+    color:var(--cream);
+    font-style:italic;
+  }
+
+  .stage-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .stage-card{background:var(--ink-2);border:1px solid var(--line);border-radius:18px;padding:24px 22px;}
+  .stage-card .tag{font-family:'Unbounded',sans-serif;font-size:11px;color:var(--pink-glow);letter-spacing:0.1em;text-transform:uppercase;}
+  .stage-card h3{margin-top:8px;font-size:15.5px;}
+  .stage-card ul{margin-top:12px;list-style:none;}
+  .stage-card li{font-size:13px;color:var(--cream-dim);padding:7px 0;border-top:1px solid var(--line);}
+  .stage-card li:first-child{border-top:none;}
+
+  .faq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .faq-card{background:var(--ink-2);border:1px solid var(--line);border-radius:20px;padding:26px 24px;}
+  .faq-card h3{font-family:'Unbounded',sans-serif;font-size:15.5px;margin-bottom:10px;}
+  .faq-card p{font-size:14px;color:var(--cream-dim);}
+
+  .pivot{max-width:620px;margin:0 auto;text-align:center;}
+  .pivot p{margin-top:16px;font-size:16.5px;color:var(--cream-dim);}
+  .pivot p.strong{color:var(--cream);font-family:'Unbounded',sans-serif;font-size:19px;font-weight:600;margin-top:22px;line-height:1.4;}
+
+  .inc-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    background:var(--line);
+    border-radius:22px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    margin-top:40px;
+  }
+  .inc-card{
+    background:var(--ink);
+    padding:28px 22px;
+  }
+  .inc-card .ico{font-size:20px;margin-bottom:12px;}
+  .inc-card h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:600;margin-bottom:8px;}
+  .inc-card p{font-size:12.5px;color:var(--cream-dim);}
+
+  .final{
+    position:relative;
+    border-radius:32px;
+    margin:0 24px;
+    padding:72px 40px;
+    background:linear-gradient(150deg,var(--pink) 0%, var(--pink-dark) 70%, #3d0620 100%);
+    overflow:hidden;
+    text-align:center;
+  }
+  .final::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 80% 0%, rgba(255,255,255,0.22), transparent 45%);
+  }
+  .final-inner{position:relative;max-width:640px;margin:0 auto;}
+  .final .eyebrow{color:#fff;}
+  .final .eyebrow::before{background:#fff;}
+  .final h2{font-size:clamp(28px,4.6vw,44px);color:#fff;}
+  .final p.desc{margin-top:16px;color:rgba(255,255,255,0.88);font-size:16.5px;}
+  .price-row{margin-top:24px;display:flex;justify-content:center;}
+  .price-tag{
+    font-family:'Unbounded',sans-serif;
+    font-size:15px;font-weight:700;
+    color:#fff;
+    background:rgba(255,255,255,0.16);
+    border:1px solid rgba(255,255,255,0.3);
+    padding:10px 22px;
+    border-radius:100px;
+  }
+  .final .btn{
+    margin-top:30px;
+    background:#fff;
+    color:var(--pink-dark);
+    box-shadow:0 18px 40px -10px rgba(0,0,0,0.35);
+  }
+  .final .btn:hover{transform:translateY(-2px) scale(1.02);}
+  .final .hero-date{
+    margin-top:18px;
+    justify-content:center;
+    display:flex;align-items:center;gap:8px;
+    font-family:'Unbounded',sans-serif;font-size:12.5px;
+    color:rgba(255,255,255,0.85);
+  }
+  .final .hero-date b{color:#fff;font-weight:600;}
+  .final .dot{width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+  footer{padding:48px 0 40px;text-align:center;}
+  footer p{font-size:12.5px;color:var(--cream-dim);}
+  footer .brand{justify-content:center;display:flex;margin-bottom:10px;}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (max-width:860px){
+    .pain-grid{grid-template-columns:1fr;}
+    .format-list{grid-template-columns:1fr;}
+    .stage-grid{grid-template-columns:repeat(2,1fr);}
+    .faq-grid{grid-template-columns:1fr;}
+    .journey-track{grid-template-columns:repeat(5,1fr);}
+    .j-step p{display:none;}
+    .inc-grid{grid-template-columns:1fr;}
+    .final{margin:0 12px;padding:52px 24px;}
+    section{padding:60px 0;}
+  }
+  @media (max-width:520px){
+    .j-dot{width:30px;height:30px;font-size:11px;}
+    .j-step h3{font-size:10px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .dot,.arrow{animation:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">Контент, который <span>приводит клиентов</span></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <span class="eyebrow">10 форматов Reels для экспертов</span>
+      <h1>«А что вообще сегодня <em>снимать?</em>»</h1>
+      <p class="lead">Открываешь заметки — и идей нет. Или снимаешь регулярно, а просмотры застряли на 300–800. Или просмотры есть, а сообщений «сколько стоит?» — почти нет. Это не про нишу и не про то, что ты не умеешь снимать. Это про отсутствие системы.</p>
+      <div class="hero-foot">
+        <span class="scroll-cue"><span class="arrow">↓</span>10 форматов, которые эту систему создают</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pains">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Узнаёшь себя?</span>
+      <h2>Проблема не в желании — в системе</h2>
+      <p>Можно быть отличным специалистом, но если человек не видит твою экспертность и не узнаёт в контенте свою проблему — он просто проходит мимо.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal"><div class="mark">”</div><div class="quote">«Сниму завтра»</div><p>Идея есть, но каждый раз находится причина отложить съёмку.</p></div>
+      <div class="pain-card reveal"><div class="mark">”</div><div class="quote">300, 500, 800 просмотров</div><p>Стараешься, монтируешь, выкладываешь — а охваты не растут.</p></div>
+      <div class="pain-card reveal"><div class="mark">”</div><div class="quote">Просмотры есть, заявок нет</div><p>Лайки и сохранения — да. Сообщений «как записаться» — почти нет.</p></div>
+      <div class="pain-card reveal"><div class="mark">”</div><div class="quote">«Что писать в Threads?»</div><p>Завела — и не понимаешь, как превратить это в источник клиентов.</p></div>
+    </div>
+
+    <div class="reveal" style="margin-top:56px;max-width:640px;">
+      <p style="font-size:16.5px;color:var(--cream-dim);">Тебе нужен не контент ради контента. Тебе нужен контент, который проходит путь:</p>
+    </div>
+    <div class="journey-track reveal">
+      <div class="j-step"><div class="j-dot">1</div><h3>Внимание</h3><p>Тебя замечают</p></div>
+      <div class="j-step"><div class="j-dot">2</div><h3>Доверие</h3><p>«Она разбирается»</p></div>
+      <div class="j-step"><div class="j-dot">3</div><h3>Экспертность</h3><p>Твоя позиция</p></div>
+      <div class="j-step"><div class="j-dot">4</div><h3>Желание</h3><p>«Мне тоже нужно»</p></div>
+      <div class="j-step"><div class="j-dot">5</div><h3>Действие</h3><p>Следующий шаг</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="formats">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">10 форматов</span>
+      <h2>Форматы, которые можно использовать на разных этапах пути</h2>
+      <p>Одну и ту же проблему клиента можно раскрыть десятками способов. Вот десять — под каждый этап.</p>
+    </div>
+    <div class="format-list">
+      <div class="format-item reveal">
+        <span class="num">01 · Попадание в боль</span>
+        <h3>Зацепи правильного человека</h3>
+        <p>Не пытайся понравиться всем — покажи конкретную ситуацию, в которой человек узнает себя. Так приходит целевая аудитория, а не случайные просмотры.</p>
+        <div class="ex">«Ты вроде бы хочешь вести блог, но каждый раз, открывая камеру, не понимаешь, что говорить?»</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">02 · Ошибка</span>
+        <h3>Не «неправильно», а «почему»</h3>
+        <p>Покажи действие, которое мешает результату — и объясни: почему → что происходит → как сделать лучше.</p>
+        <div class="ex">«Если постоянно срываешься с диеты — проблема может быть не в силе воли».</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">03 · Миф</span>
+        <h3>Разрушь и дай свою позицию</h3>
+        <p>Разбирай убеждения аудитории — но не оставляй человека с разрушенным мифом. Дай профессиональную точку зрения: именно она формирует образ эксперта.</p>
+        <div class="ex">«Миф: если постоянно анализировать чувства — значит, себя понимаешь. На деле анализ может усиливать тревогу».</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">04 · Разбор</span>
+        <h3>Покажи ход мыслей</h3>
+        <p>Возьми конкретную ситуацию и разложи по полочкам. Человек буквально видит, как ты работаешь — и легче представляет себя в работе с тобой.</p>
+        <div class="ex">«Почему вес стоит на месте, хотя ты уже месяцами пытаешься похудеть? Разбираю причины».</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">05 · Конкретное решение</span>
+        <h3>Дай маленький результат сейчас</h3>
+        <p>Человек должен закрыть ролик с мыслью «это можно применить прямо сегодня». Такие маленькие результаты постепенно формируют доверие.</p>
+        <div class="ex">«Откладываешь блог? Сделай одно: запиши 5 вопросов, которые чаще всего задают клиенты — это уже 5 тем».</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">06 · Вопрос клиента</span>
+        <h3>Темы уже есть в переписках</h3>
+        <p>Не знаешь, что снимать? Посмотри на вопросы своих клиентов — там уже лежат готовые темы. Не нужно каждый день изобретать новое.</p>
+        <div class="ex">«Как перестать бояться камеры?» — уже готовый Reels.</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">07 · До / После</span>
+        <h3>Объясни, а не только покажи</h3>
+        <p>Картинка «до/после» показывает результат. Объяснение — что было, что изменили, почему — показывает компетентность.</p>
+        <div class="ex">«Если я обращусь к этому специалисту, он понимает, что именно нужно делать» — вот что должен подумать зритель.</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">08 · Процесс</span>
+        <h3>Покажи закулисье</h3>
+        <p>Консультация, создание продукта, доработка результата — процесс отвечает на вопрос «за что именно я плачу специалисту».</p>
+        <div class="ex">Красивый финал без процесса не всегда объясняет твою ценность.</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">09 · История / Кейс</span>
+        <h3>Дай узнать себя</h3>
+        <p>С какой проблемой пришёл клиент → что мешало → что вы сделали → что изменилось. Кейс — один из самых сильных видов продающего контента.</p>
+        <div class="ex">«У меня похожая ситуация» — и человек уже представляет свой результат.</div>
+      </div>
+      <div class="format-item reveal">
+        <span class="num">10 · Ведёт к продаже</span>
+        <h3>Не реклама, а мост</h3>
+        <p>Продающий Reels — не «у меня есть услуга, покупайте». Сначала проблема → решение → экспертность → и только потом следующий шаг.</p>
+        <div class="ex">«Вот 3 вещи, которые я бы проверила в первую очередь» — и дальше предложение.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="system">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Как соединить в систему</span>
+      <h2>Блог — это путь клиента, а не набор роликов</h2>
+      <p>Каждый формат работает на своём этапе. Вот как они складываются вместе.</p>
+    </div>
+    <div class="stage-grid">
+      <div class="stage-card reveal"><span class="tag">Внимание</span><h3>Тебя замечают</h3><ul><li>Боль</li><li>Ошибка</li><li>Миф</li></ul></div>
+      <div class="stage-card reveal"><span class="tag">Доверие</span><h3>«Она разбирается»</h3><ul><li>Разбор</li><li>Процесс</li><li>История / Кейс</li></ul></div>
+      <div class="stage-card reveal"><span class="tag">Желание</span><h3>«Мне тоже нужно»</h3><ul><li>Конкретное решение</li><li>Вопрос клиента</li><li>До / После</li></ul></div>
+      <div class="stage-card reveal"><span class="tag">Действие</span><h3>Следующий шаг</h3><ul><li>Ведёт к продаже</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Частые вопросы</span>
+      <h2>Три ситуации, в которых обычно застревают</h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-card reveal"><h3>«Мне нечего снимать»</h3><p>Одну проблему можно раскрыть десятками способов. Дело не в отсутствии тем — а в отсутствии системы, которая помогает их находить.</p></div>
+      <div class="faq-card reveal"><h3>Reels не набирают просмотры</h3><p>Не спеши с выводом «блог никому не интересен». Контент — это тестирование: публикуешь → анализируешь → повторяешь → улучшаешь.</p></div>
+      <div class="faq-card reveal"><h3>Просмотры есть, клиентов нет</h3><p>Клиентский блог — это не только Reels, а позиционирование + упаковка + контент + доверие + продажи + путь клиента вместе.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="join">
+  <div class="wrap">
+    <div class="pivot reveal">
+      <span class="eyebrow">И теперь главное</span>
+      <h2 style="margin-top:14px;font-size:clamp(26px,4vw,38px);">Не ещё один гайд. Готовая система на 10 дней</h2>
+      <p>Можно сохранить этот материал и в сотый раз сказать себе «завтра сниму первый Reels». А можно прямо сегодня зайти в систему, где за тебя уже всё продумано: тема, формат и разбор на каждый день — готовы.</p>
+      <p class="strong">10-дневный челлендж «10 Reels» — 990 ₽, оплата один раз, доступ сразу. 10 дней сфокусированной работы вместо месяцев хаотичных попыток.</p>
+    </div>
+
+    <div class="section-head reveal" style="text-align:center;margin:64px auto 0;max-width:560px;">
+      <span class="eyebrow" style="justify-content:center;">Что ты получаешь</span>
+      <h2 style="margin-top:14px;">За 10 дней блог станет другим</h2>
+    </div>
+    <div class="inc-grid reveal">
+      <div class="inc-card"><div class="ico">🎬</div><h3>10 снятых Reels</h3><p>Не 10 идей в заметках, а 10 реально отснятых и смонтированных роликов. К концу челленджа блог выглядит и работает иначе.</p></div>
+      <div class="inc-card"><div class="ico">💬</div><h3>Личная обратная связь</h3><p>Присылаешь ролик — получаешь конкретные правки от меня, а не общие советы из интернета. Видишь свои ошибки раньше, чем их увидит аудитория.</p></div>
+      <div class="inc-card"><div class="ico">🔎</div><h3>Разборы блогов</h3><p>Смотрим не только контент, но и упаковку профиля целиком: что цепляет, что отталкивает и где именно теряются клиенты.</p></div>
+      <div class="inc-card"><div class="ico">🧵</div><h3>Threads с нуля до системы</h3><p>Разберём, что туда писать и как из тихой ленты сделать ещё один канал заявок — большинство экспертов его вообще не использует.</p></div>
+      <div class="inc-card"><div class="ico">💰</div><h3>Фокус на деньгах, не на лайках</h3><p>Говорим не про охваты ради охватов, а про то, как конкретный ролик превращается в сообщение «сколько стоит?».</p></div>
+      <div class="inc-card"><div class="ico">📅</div><h3>План ещё на 2 недели</h3><p>Челлендж заканчивается — а темы для съёмок нет. Уходишь с готовым контент-планом, а не с чистым листом.</p></div>
+    </div>
+
+    <div class="final reveal" style="margin-top:56px;">
+      <div class="final-inner">
+        <span class="eyebrow">10 дней · 10 Reels</span>
+        <h2>Вся система — за 990 ₽</h2>
+        <p class="desc">Оплата — по кнопке ниже, доступ в закрытый Telegram-канал открывается сразу. Сам челлендж стартует 7 сентября: каждый день — новое задание, понятная инструкция, обратная связь и разборы.</p>
+        <div class="price-row">
+          <span class="price-tag">990 ₽ · разовая оплата</span>
+        </div>
+        <a href="https://t.me/marketingkristina26/78" target="_blank" rel="noopener" class="btn">Оплатить и получить доступ
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <div class="hero-date"><span class="dot"></span>Старт — <b>7 сентября</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">Контент, который <span>приводит клиентов</span></div>
+    <p>10 дней · 10 Reels</p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
